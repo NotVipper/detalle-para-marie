@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Un detalle para ti</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#ffd6e7,#fff4f8);
+  color:#4a2433;
+}
+.card{
+  width:min(92%,520px);
+  padding:36px 28px;
+  text-align:center;
+  background:rgba(255,255,255,.88);
+  border-radius:24px;
+  box-shadow:0 16px 50px rgba(120,40,80,.18);
+}
+h1{margin-top:0}
+input{
+  width:100%;
+  padding:14px;
+  border:1px solid #e7b8c9;
+  border-radius:12px;
+  font-size:16px;
+  text-align:center;
+}
+button{
+  margin-top:12px;
+  padding:13px 22px;
+  border:0;
+  border-radius:12px;
+  cursor:pointer;
+  background:#c95d87;
+  color:#fff;
+  font-size:16px;
+}
+#mensaje{margin-top:18px;min-height:24px}
+#sorpresa{display:none;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Hay algo para ti 💌</h1>
+  <p>Escribe la contraseña para descubrirlo.</p>
+  <input id="password" type="password" placeholder="Contraseña">
+  <button onclick="checkPassword()">Abrir</button>
+  <div id="mensaje"></div>
+  <div id="sorpresa">
+    <h2>Esto es para ti</h2>
+    <p>Espero que este pequeño detalle te saque una sonrisa. ❤️</p>
+  </div>
+</div>
+<script>
+function checkPassword(){
+  const password=document.getElementById('password').value;
+  const mensaje=document.getElementById('mensaje');
+  const sorpresa=document.getElementById('sorpresa');
+  if(password==="mafer"){
+    mensaje.textContent="¡Lo adivinaste! ✨";
+    sorpresa.style.display="block";
+  }else{
+    mensaje.textContent="Intenta de nuevo 💕";
+    sorpresa.style.display="none";
+  }
+}
+</script>
+</body>
+</html>
