@@ -12,66 +12,173 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(135deg,#ffd6e7,#fff4f8);
-  color:#4a2433;
+  padding:24px;
+  font-family:Georgia,"Times New Roman",serif;
+  background:linear-gradient(90deg,#8eb9e8 0%,#8eb9e8 50%,#e8a8c0 50%,#e8a8c0 100%);
+  color:#27232a;
 }
 .card{
-  width:min(92%,520px);
-  padding:36px 28px;
+  width:min(450px,100%);
+  padding:38px 28px;
+  border-radius:26px;
+  background:rgba(255,255,255,.82);
+  border:1px solid rgba(255,255,255,.75);
+  box-shadow:0 20px 60px rgba(40,30,50,.25);
   text-align:center;
-  background:rgba(255,255,255,.88);
-  border-radius:24px;
-  box-shadow:0 16px 50px rgba(120,40,80,.18);
 }
-h1{margin-top:0}
+h1{
+  font-size:30px;
+  font-weight:400;
+  margin:0 0 22px;
+}
+.message{
+  font-size:18px;
+  line-height:1.65;
+  margin:0 auto 20px;
+}
+.instruction{
+  font-size:17px;
+  margin:0 0 14px;
+}
 input{
   width:100%;
-  padding:14px;
-  border:1px solid #e7b8c9;
-  border-radius:12px;
-  font-size:16px;
+  padding:15px 12px;
+  border-radius:13px;
+  border:1px solid rgba(50,40,60,.2);
+  background:rgba(255,255,255,.9);
+  color:#302a31;
   text-align:center;
+  font-size:19px;
+  letter-spacing:2px;
+  outline:none;
+}
+input:focus{
+  border-color:#9b7ca0;
+  box-shadow:0 0 0 3px rgba(155,124,160,.15);
 }
 button{
+  width:100%;
   margin-top:12px;
-  padding:13px 22px;
+  padding:14px;
   border:0;
-  border-radius:12px;
+  border-radius:13px;
   cursor:pointer;
-  background:#c95d87;
-  color:#fff;
+  background:#302a35;
+  color:white;
   font-size:16px;
 }
-#mensaje{margin-top:18px;min-height:24px}
-#sorpresa{display:none;margin-top:24px}
+.error{
+  min-height:24px;
+  margin:10px 0 0;
+  color:#9b425d;
+  font-size:14px;
+}
+#secret{display:none}
+.heart{
+  font-size:34px;
+  margin-bottom:12px;
+}
+.song{
+  margin:22px 0;
+  padding:18px;
+  border-radius:16px;
+  background:rgba(255,255,255,.55);
+}
+a{
+  color:#55405d;
+  text-decoration:none;
+  font-size:18px;
+}
+.small{
+  font-size:13px;
+  color:#6e6570;
+}
+@media(max-width:500px){
+  body{padding:16px}
+  .card{padding:32px 22px}
+}
 </style>
 </head>
 <body>
-<div class="card">
-  <h1>Hay algo para ti 💌</h1>
-  <p>Escribe la contraseña para descubrirlo.</p>
-  <input id="password" type="password" placeholder="Contraseña">
-  <button onclick="checkPassword()">Abrir</button>
-  <div id="mensaje"></div>
-  <div id="sorpresa">
-    <h2>Esto es para ti</h2>
-    <p>Espero que este pequeño detalle te saque una sonrisa. ❤️</p>
+
+<main class="card">
+
+<section id="lock">
+  <div class="heart">♡</div>
+
+  <h1>Hay un detalle para ti</h1>
+
+  <p class="message">
+    Marie, hay una fecha que, después de conocerte, imposible que la olvidara.
+  </p>
+
+  <p class="instruction">Puchale el código, ándale.</p>
+
+  <input id="code"
+         inputmode="numeric"
+         maxlength="8"
+         placeholder="DDMMYYYY"
+         autocomplete="off">
+
+  <button onclick="unlock()">Descubrir</button>
+
+  <p id="error" class="error"></p>
+</section>
+
+<section id="secret">
+  <div class="heart">♡</div>
+
+  <h1>Sabía que adivinarías Marie!!</h1>
+
+  <p>Los detalles son importantes, ¿recuerdas?</p>
+
+  <p>
+    Tengo tantas ideas de cómo sorprenderte, y usando mi poco conocimiento
+    en programación, pude hacer esto.
+  </p>
+
+  <p>
+    Ahora terminé encontrando en canciones lo que de frente no puedo.
+    Esto es para ti
+  </p>
+
+  <div class="song">
+    <p>Esta playlist es tuya ❤️</p>
+    <a id="songLink"
+       href="https://open.spotify.com/playlist/1QpJr3sfyr7UcAdjIMy0hP?si=39b508684c054120"
+       target="_blank"
+       rel="noopener">
+       ♫ Escuchar la playlist
+    </a>
   </div>
-</div>
+
+  <p class="small">Rafael</p>
+</section>
+
+</main>
+
 <script>
-function checkPassword(){
-  const password=document.getElementById('password').value;
-  const mensaje=document.getElementById('mensaje');
-  const sorpresa=document.getElementById('sorpresa');
-  if(password==="mafer"){
-    mensaje.textContent="¡Lo adivinaste! ✨";
-    sorpresa.style.display="block";
+const BIRTHDAY_CODE = "05042005";
+const SONG_URL = "https://open.spotify.com/playlist/1QpJr3sfyr7UcAdjIMy0hP?si=39b508684c054120";
+
+document.getElementById("songLink").href = SONG_URL;
+
+function unlock(){
+  const value = document.getElementById("code").value.replace(/\D/g,"");
+  const error = document.getElementById("error");
+
+  if(value === BIRTHDAY_CODE){
+    document.getElementById("lock").style.display = "none";
+    document.getElementById("secret").style.display = "block";
   }else{
-    mensaje.textContent="Intenta de nuevo 💕";
-    sorpresa.style.display="none";
+    error.textContent = "Ese no parece ser el código… intenta otra vez.";
   }
 }
+
+document.getElementById("code").addEventListener("keydown", function(e){
+  if(e.key === "Enter") unlock();
+});
 </script>
+
 </body>
 </html>
